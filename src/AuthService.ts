@@ -18,4 +18,21 @@ export class AuthService {
 		console.log("User registered successfully");
 		return user;
 	}
+
+	login(name: string, password: string, cpf: string): User | undefined {
+		const exist = this.UserRepo.selectByName(name);
+
+		if (!exist) {
+			throw new Error("User does not exist.");
+		}
+
+		if (!(exist.password === password)) {
+			throw new Error("Wrong password");
+		}
+
+		exist.loged = true;
+
+		console.log("User loged in successfully");
+		return exist;
+	}
 }
